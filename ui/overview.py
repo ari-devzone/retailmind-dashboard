@@ -157,6 +157,13 @@ def render_overview(turns_df, topics_df):
 @media (max-width: 900px) { .topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .topic-grid { grid-template-columns: 1fr; } }
 
+.topic-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 0.8rem;
+}
+
 .topic-card {
     border-radius: 12px;
     padding: 0.9rem 1.05rem 1rem;
@@ -166,10 +173,12 @@ def render_overview(turns_df, topics_df):
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
-    min-height: 140px;
+    height: 160px;
     position: relative;
+    justify-content: flex-start;
+    overflow: hidden;
 }
-.topic-title { font-weight: 750; color: #991b1b; display: flex; align-items: center; gap: 0.4rem; font-size: 1rem; }
+.topic-title { font-weight: 750; color: #991b1b; display: flex; align-items: center; gap: 0.4rem; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .topic-value { font-size: 1.6rem; font-weight: 800; color: #0b1324; line-height: 1.1; }
 .topic-sub { color: #475569; font-size: 1.02rem; margin-bottom: 0.5rem; }
 .topic-footer { position: absolute; bottom: 0.5rem; right: 0.5rem; }
@@ -186,18 +195,20 @@ def render_overview(turns_df, topics_df):
 }
 
 /* Investigate button styling */
-.topic-card .topic-footer div[data-testid="stButton"] button {
+[data-testid="stButton"] button {
+    width: 100% !important;
     background: linear-gradient(135deg, #64748b 0%, #475569 100%) !important;
     color: white !important;
     border: none !important;
     font-weight: 700 !important;
     border-radius: 6px !important;
-    padding: 0.4rem 0.8rem !important;
+    padding: 0.5rem 0.8rem !important;
     font-size: 0.92rem !important;
     box-shadow: 0 2px 8px rgba(71, 85, 105, 0.4) !important;
     transition: all 0.2s ease !important;
     height: auto !important;
-    min-height: 32px !important;
+    min-height: 36px !important;
+}
     position: absolute !important;
     bottom: 0 !important;
     right: 0 !important;
@@ -645,24 +656,19 @@ hr {
                             <div style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-top: 0.2rem;">{int(row['n_examples'])}</div>
                         </div>
                     </div>
+                </div>
                 """,
                 unsafe_allow_html=True,
             )
             st.markdown('<div style="margin-top: 0.8rem;">', unsafe_allow_html=True)
             if st.button("🔍 Investigate", key=f"topic_{idx}"):
-                    # Navigate to Diagnostics and open this specific topic by id
-                    st.session_state.page = "Diagnostics"
-                    st.session_state.selected_topic = row['topic_id']
-                    st.session_state.topic_rank = diagnostics_ranks.get(row['topic_id'], 0)
-                    st.session_state.topic_display_label = row['diag_label']
-                    st.rerun()
+                # Navigate to Diagnostics and open this specific topic by id
+                st.session_state.page = "Diagnostics"
+                st.session_state.selected_topic = row['topic_id']
+                st.session_state.topic_rank = diagnostics_ranks.get(row['topic_id'], 0)
+                st.session_state.topic_display_label = row['diag_label']
+                st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
-            st.markdown(
-                """
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
 
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
     
