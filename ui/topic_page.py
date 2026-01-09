@@ -15,16 +15,25 @@ def render_topic_page(turns_df, topics_df, repairs_df, topic_id):
     # Custom CSS for styling
     st.markdown("""
     <style>
-    /* Page headers */
-    .topic-header {
-        font-size: 1.8rem;
-        font-weight: 900;
+    /* Unified Page Headers */
+    .page-header {
+        font-size: 2rem;
+        font-weight: 800;
         color: #0f172a;
         margin-bottom: 0.5rem;
-        letter-spacing: -0.8px;
-        border-bottom: 3px solid #3b82f6;
+        letter-spacing: -0.02em;
+        border-bottom: 3px solid #dc2626;
         padding-bottom: 0.5rem;
         display: inline-block;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .page-subheader {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 1.5rem 0 1rem 0;
+        letter-spacing: -0.01em;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
     .topic-caption {
         color: #64748b;
@@ -107,15 +116,20 @@ def render_topic_page(turns_df, topics_df, repairs_df, topic_id):
 
     st.markdown('<div class="topic-page">', unsafe_allow_html=True)
     
-    # Use inferred theme label matching diagnostics page
-    theme_label = topic["topic_label"]
-    if not topic_turns.empty:
-        inferred = infer_conversation_theme(topic_turns)
-        if inferred:
-            theme_label = inferred
-    display_label = f"Failure - {theme_label}"
+    # Check if we have rank and label from navigation
+    if "topic_rank" in st.session_state and "topic_display_label" in st.session_state:
+        # Use the stored rank and label from diagnostics page
+        display_label = f"#{st.session_state.topic_rank} {st.session_state.topic_display_label}"
+    else:
+        # Fallback: infer theme label if navigated from elsewhere
+        theme_label = topic["topic_label"]
+        if not topic_turns.empty:
+            inferred = infer_conversation_theme(topic_turns)
+            if inferred:
+                theme_label = inferred
+        display_label = f"Failure - {theme_label}"
     
-    st.markdown(f'<h1 class="topic-header">{display_label}</h1>', unsafe_allow_html=True)
+    st.markdown(f'<h1 class="page-header">{display_label}</h1>', unsafe_allow_html=True)
     st.markdown(f'<div class="topic-caption">{topic["example_reason"]}</div>', unsafe_allow_html=True)
 
     severity = compute_severity_stats(topic_turns)

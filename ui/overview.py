@@ -229,8 +229,9 @@ hr {
 
     # Build labels that mirror the Diagnostics page (inferred themes + unique prefixes)
     diagnostics_labels = {}
+    diagnostics_ranks = {}  # Store rank for each topic
     used_labels = set()
-    for _, topic_row in topics_df.sort_values("n_examples", ascending=False).iterrows():
+    for rank, (_, topic_row) in enumerate(topics_df.sort_values("n_examples", ascending=False).iterrows(), 1):
         topic_turns = turns_df[turns_df["topic_id"] == topic_row["topic_id"]]
         theme_label = topic_row["topic_label"]
         if not topic_turns.empty:
@@ -247,6 +248,7 @@ hr {
 
         used_labels.add(unique_label)
         diagnostics_labels[topic_row["topic_id"]] = unique_label
+        diagnostics_ranks[topic_row["topic_id"]] = rank
 
     avg_severity_display = f"{avg_severity_low_sat:.2f}" if pd.notna(avg_severity_low_sat) else "N/A"
     
@@ -483,6 +485,8 @@ hr {
                                 if st.button("View", key=f"fail_{row['topic_id']}"):
                                     st.session_state.page = "Diagnostics"
                                     st.session_state.selected_topic = row['topic_id']
+                                    st.session_state.topic_rank = diagnostics_ranks.get(row['topic_id'], 0)
+                                    st.session_state.topic_display_label = row['diag_label']
                                     st.rerun()
     
     with col3:
@@ -649,6 +653,8 @@ hr {
                     # Navigate to Diagnostics and open this specific topic by id
                     st.session_state.page = "Diagnostics"
                     st.session_state.selected_topic = row['topic_id']
+                    st.session_state.topic_rank = diagnostics_ranks.get(row['topic_id'], 0)
+                    st.session_state.topic_display_label = row['diag_label']
                     st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
             st.markdown(

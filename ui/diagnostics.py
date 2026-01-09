@@ -265,6 +265,8 @@ def render_diagnostics(turns_df, topics_df, repairs_df):
                 # Arrow button to navigate to topic details
                 if st.button("→", key=f"explore_{row['topic_id']}", help="View topic details"):
                     st.session_state.selected_topic = row["topic_id"]
+                    st.session_state.topic_rank = idx  # Store the rank number
+                    st.session_state.topic_display_label = unique_label  # Store the full label
                     st.rerun()
 
     # ---- Topic Detail Page ----
