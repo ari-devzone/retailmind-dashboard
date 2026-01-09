@@ -415,10 +415,9 @@ hr {
             chart_col, legend_col = st.columns([2, 1])
             
             with chart_col:
-                # Create selection for interactivity
                 success_click = alt.selection_point(fields=['Status'], name='status_select')
-                
-                pie_chart = alt.Chart(success_dist).mark_arc(innerRadius=50).encode(
+
+                pie_chart = alt.Chart(success_dist).mark_arc(innerRadius=55).encode(
                     theta="Count:Q",
                     color=alt.Color(
                         "Status:N",
@@ -428,16 +427,16 @@ hr {
                         ),
                         legend=None
                     ),
-                    opacity=alt.condition(success_click, alt.value(1), alt.value(0.5)),
+                    opacity=alt.condition(success_click, alt.value(1), alt.value(0.55)),
                     tooltip=["Status", "Count", "Percentage"]
-                ).add_params(success_click).properties(height=300, width=300)
+                ).add_params(success_click).properties(height=280, width=280)
 
                 success_chart_selection = st.altair_chart(pie_chart, use_container_width=False, on_select="rerun", key="success_failure_chart")
             
             with legend_col:
                 st.markdown(
                     f"""
-                    <div style="display: flex; flex-direction: column; justify-content: center; height: 300px; padding-left: 1rem;">
+                    <div style="display: flex; flex-direction: column; justify-content: center; height: 280px; padding-left: 0.5rem; font-size: 0.95rem;">
                         <div style="margin-bottom: 1.5rem;">
                             <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
                                 <div style="width: 20px; height: 20px; background: #22c55e; border-radius: 4px; margin-right: 0.5rem;"></div>
@@ -469,7 +468,9 @@ hr {
                     
                     if selected_status == "Failed":
                         st.markdown(f"**Top Failure Topics:**")
-                        top_failure_topics = topics_df.nlargest(5, "n_examples")[["topic_id", "topic_label", "n_examples"]].copy()
+                        top_failure_topics = topics_df.nlargest(5, "n_examples")[
+                            ["topic_id", "topic_label", "n_examples"]
+                        ].copy()
                         top_failure_topics["diag_label"] = top_failure_topics["topic_id"].map(diagnostics_labels)
 
                         for _, row in top_failure_topics.iterrows():
@@ -517,11 +518,9 @@ hr {
                 sev_chart_col, sev_legend_col = st.columns([2, 1])
                 
                 with sev_chart_col:
-                    # Create selection for interactivity
                     click = alt.selection_point(fields=['Severity'], name='severity_select')
-                    
-                    # Create donut chart with fixed size and selection
-                    severity_chart = alt.Chart(severity_counts).mark_arc(innerRadius=50).encode(
+
+                    severity_chart = alt.Chart(severity_counts).mark_arc(innerRadius=55).encode(
                         theta="Count:Q",
                         color=alt.Color(
                             "Severity:N",
@@ -532,9 +531,9 @@ hr {
                             sort=severity_order,
                             legend=None
                         ),
-                        opacity=alt.condition(click, alt.value(1), alt.value(0.5)),
+                        opacity=alt.condition(click, alt.value(1), alt.value(0.55)),
                         tooltip=["Severity", "Count"]
-                    ).add_params(click).properties(height=300, width=300)
+                    ).add_params(click).properties(height=280, width=280)
                     
                     chart_selection = st.altair_chart(severity_chart, use_container_width=False, on_select="rerun", key="severity_chart")
                 
@@ -548,7 +547,7 @@ hr {
                     
                     st.markdown(
                         f"""
-                        <div style="display: flex; flex-direction: column; justify-content: center; height: 300px; padding-left: 0.5rem;">
+                        <div style="display: flex; flex-direction: column; justify-content: center; height: 280px; padding-left: 0.5rem; font-size: 0.95rem;">
                             <div style="margin-bottom: 1rem;">
                                 <div style="display: flex; align-items: center; margin-bottom: 0.4rem;">
                                     <div style="width: 18px; height: 18px; background: #dc2626; border-radius: 3px; margin-right: 0.5rem;"></div>
@@ -591,19 +590,20 @@ hr {
                             
                             # Only include topics where dominant severity matches selection
                             if severity_stats["dominant_severity"] == selected_severity:
-                                topic_label = topic_turns["topic_label"].iloc[0] if not topic_turns.empty else "Unknown"
                                 turn_count = len(topic_turns)
-                                matching_topics.append((topic_id, topic_label, turn_count))
+                                matching_topics.append((topic_id, turn_count))
                         
                         if matching_topics:
                             # Sort by turn count descending
-                            matching_topics = sorted(matching_topics, key=lambda x: x[2], reverse=True)[:5]
+                            matching_topics = sorted(matching_topics, key=lambda x: x[1], reverse=True)[:5]
                             
                             st.markdown(f"**Topics with {selected_severity} dominant severity:**")
-                            for topic_id, topic_label, count in matching_topics:
+                            for topic_id, count in matching_topics:
+                                # Use diagnostics label mapping
+                                display_label = diagnostics_labels.get(topic_id, "Unknown Topic")
                                 col_topic, col_btn = st.columns([3, 1])
                                 with col_topic:
-                                    st.markdown(f"• **{topic_label}** ({count} turn{'s' if count > 1 else ''})")
+                                    st.markdown(f"• **{display_label}** ({count} turn{'s' if count > 1 else ''})")
                                 with col_btn:
                                     if st.button("View", key=f"sev_{selected_severity}_{topic_id}"):
                                         st.session_state.page = "Diagnostics"
