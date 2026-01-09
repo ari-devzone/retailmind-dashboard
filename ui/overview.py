@@ -376,7 +376,7 @@ hr {
                         for _, turn in failure_turns.iterrows():
                             if isinstance(turn["issues"], list) and selected_issue in turn["issues"]:
                                 if turn["topic_id"] != -1:
-                                    topics_with_issue.append((turn["topic_id"], turn["topic_label"]))
+                                    topics_with_issue.append(turn["topic_id"])
                         
                         if topics_with_issue:
                             # Count occurrences
@@ -385,10 +385,12 @@ hr {
                             top_topics = topic_counts.most_common(5)
                             
                             st.markdown(f"**Topics with {selected_issue}:**")
-                            for (topic_id, topic_label), count in top_topics:
+                            for topic_id, count in top_topics:
+                                # Use diagnostics label mapping
+                                display_label = diagnostics_labels.get(topic_id, "Unknown Topic")
                                 col_topic, col_btn = st.columns([3, 1])
                                 with col_topic:
-                                    st.markdown(f"• **{topic_label}** ({count} occurrences)")
+                                    st.markdown(f"• **{display_label}** ({count} occurrences)")
                                 with col_btn:
                                     if st.button("View", key=f"issue_{selected_issue}_{topic_id}"):
                                         st.session_state.page = "Diagnostics"
@@ -436,22 +438,22 @@ hr {
             with legend_col:
                 st.markdown(
                     f"""
-                    <div style="display: flex; flex-direction: column; justify-content: center; height: 280px; padding-left: 0.5rem; font-size: 0.95rem;">
+                    <div style="display: flex; flex-direction: column; justify-content: center; height: 280px; padding-left: 0.5rem; font-size: 0.85rem;">
                         <div style="margin-bottom: 1.5rem;">
-                            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
-                                <div style="width: 20px; height: 20px; background: #22c55e; border-radius: 4px; margin-right: 0.5rem;"></div>
-                                <strong style="color: #22c55e; font-size: 1.1rem;">Successful</strong>
+                            <div style="display: flex; align-items: center; margin-bottom: 0.4rem;">
+                                <div style="width: 18px; height: 18px; background: #22c55e; border-radius: 4px; margin-right: 0.5rem;"></div>
+                                <strong style="color: #22c55e; font-size: 0.95rem;">Successful</strong>
                             </div>
-                            <div style="font-size: 1.8rem; font-weight: 800; color: #0f172a; margin-left: 1.8rem;">
+                            <div style="font-size: 1.4rem; font-weight: 800; color: #0f172a; margin-left: 1.5rem;">
                                 {success_dist[success_dist['Status'] == 'Successful']['Percentage'].values[0]:.1f}%
                             </div>
                         </div>
                         <div>
-                            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
-                                <div style="width: 20px; height: 20px; background: #ef4444; border-radius: 4px; margin-right: 0.5rem;"></div>
-                                <strong style="color: #ef4444; font-size: 1.1rem;">Failed</strong>
+                            <div style="display: flex; align-items: center; margin-bottom: 0.4rem;">
+                                <div style="width: 18px; height: 18px; background: #ef4444; border-radius: 4px; margin-right: 0.5rem;"></div>
+                                <strong style="color: #ef4444; font-size: 0.95rem;">Failed</strong>
                             </div>
-                            <div style="font-size: 1.8rem; font-weight: 800; color: #0f172a; margin-left: 1.8rem;">
+                            <div style="font-size: 1.4rem; font-weight: 800; color: #0f172a; margin-left: 1.5rem;">
                                 {success_dist[success_dist['Status'] == 'Failed']['Percentage'].values[0]:.1f}%
                             </div>
                         </div>
@@ -547,27 +549,27 @@ hr {
                     
                     st.markdown(
                         f"""
-                        <div style="display: flex; flex-direction: column; justify-content: center; height: 280px; padding-left: 0.5rem; font-size: 0.95rem;">
+                        <div style="display: flex; flex-direction: column; justify-content: center; height: 280px; padding-left: 0.5rem; font-size: 0.85rem;">
                             <div style="margin-bottom: 1rem;">
-                                <div style="display: flex; align-items: center; margin-bottom: 0.4rem;">
-                                    <div style="width: 18px; height: 18px; background: #dc2626; border-radius: 3px; margin-right: 0.5rem;"></div>
-                                    <strong style="color: #dc2626; font-size: 1.05rem;">HIGH</strong>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.35rem;">
+                                    <div style="width: 16px; height: 16px; background: #dc2626; border-radius: 3px; margin-right: 0.5rem;"></div>
+                                    <strong style="color: #dc2626; font-size: 0.92rem;">HIGH</strong>
                                 </div>
-                                <div style="font-size: 1.6rem; font-weight: 800; color: #0f172a; margin-left: 1.5rem;">{high_count}</div>
+                                <div style="font-size: 1.3rem; font-weight: 800; color: #0f172a; margin-left: 1.4rem;">{high_count}</div>
                             </div>
                             <div style="margin-bottom: 1rem;">
-                                <div style="display: flex; align-items: center; margin-bottom: 0.4rem;">
-                                    <div style="width: 18px; height: 18px; background: #f59e0b; border-radius: 3px; margin-right: 0.5rem;"></div>
-                                    <strong style="color: #f59e0b; font-size: 1.05rem;">MEDIUM</strong>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.35rem;">
+                                    <div style="width: 16px; height: 16px; background: #f59e0b; border-radius: 3px; margin-right: 0.5rem;"></div>
+                                    <strong style="color: #f59e0b; font-size: 0.92rem;">MEDIUM</strong>
                                 </div>
-                                <div style="font-size: 1.6rem; font-weight: 800; color: #0f172a; margin-left: 1.5rem;">{medium_count}</div>
+                                <div style="font-size: 1.3rem; font-weight: 800; color: #0f172a; margin-left: 1.4rem;">{medium_count}</div>
                             </div>
                             <div style="margin-bottom: 1rem;">
-                                <div style="display: flex; align-items: center; margin-bottom: 0.4rem;">
-                                    <div style="width: 18px; height: 18px; background: #fbbf24; border-radius: 3px; margin-right: 0.5rem;"></div>
-                                    <strong style="color: #d97706; font-size: 1.05rem;">LOW</strong>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.35rem;">
+                                    <div style="width: 16px; height: 16px; background: #fbbf24; border-radius: 3px; margin-right: 0.5rem;"></div>
+                                    <strong style="color: #d97706; font-size: 0.92rem;">LOW</strong>
                                 </div>
-                                <div style="font-size: 1.6rem; font-weight: 800; color: #0f172a; margin-left: 1.5rem;">{low_count}</div>
+                                <div style="font-size: 1.3rem; font-weight: 800; color: #0f172a; margin-left: 1.4rem;">{low_count}</div>
                             </div>
                         </div>
                         """,
