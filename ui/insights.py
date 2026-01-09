@@ -13,7 +13,7 @@ from logic.aggregations import (
 def render_positive_insights(turns_df, topics_df):
     """
     Render the "What Works Well" page with:
-    1. Top 50 conversations ranked by satisfaction
+    1. Top conversations ranked by satisfaction (capped at 50 internally)
     2. Top Performing Topics extracted from top conversations
     3. "Why it works" patterns from existing signals
     4. Concrete success examples with explanations
@@ -89,7 +89,7 @@ def render_positive_insights(turns_df, topics_df):
     # Page header
     st.markdown('<h1 class="page-header">✅ What Works Well</h1>', unsafe_allow_html=True)
     
-    # Step 1: Get top 50 conversations
+    # Step 1: Get top conversations (capped at 50 for performance)
     top_conversations = get_top_conversations(turns_df, limit=50)
     
     if not top_conversations:
@@ -306,10 +306,10 @@ def render_positive_insights(turns_df, topics_df):
         avg_turns = sum([c["turn_count"] for c in top_conversations]) / len(top_conversations)
         
         st.markdown(f"""
-- **Top 50 conversations** have an average satisfaction of **{avg_sat:.2f}/5**
-- **Average turns per conversation**: {avg_turns:.1f} (efficient, focused exchanges)
-- **Most successful topic**: {top_topics.iloc[0]["topic_label"] if not top_topics.empty else "N/A"} 
-  (Avg satisfaction: {top_topics.iloc[0]["avg_satisfaction"]:.2f} if not top_topics.empty else "N/A")
+    - **Top conversations** have an average satisfaction of **{avg_sat:.2f}/5**
+    - **Average turns per conversation**: {avg_turns:.1f} (efficient, focused exchanges)
+    - **Most successful topic**: {top_topics.iloc[0]["topic_label"] if not top_topics.empty else "N/A"} 
+      (Avg satisfaction: {top_topics.iloc[0]["avg_satisfaction"]:.2f} if not top_topics.empty else "N/A")
         """)
     
     # Next steps
@@ -326,7 +326,7 @@ def render_positive_insights(turns_df, topics_df):
     with st.container(border=True):
         st.markdown("### 📌 Technical Notes")
         st.markdown(
-            "- **Top 50 methodology**: Conversations ranked by satisfaction score (descending), with tie-breakers on success metrics\n"
+            "- **Top conversations methodology**: Conversations ranked by satisfaction score (descending), with tie-breakers on success metrics\n"
             "- **Topic assignment**: Most frequent topic in conversation used; NaN topics replaced with 'General Product Questions & Miscellaneous'\n"
             "- **Patterns**: Extracted from issue presence, knowledge base alignment, turn efficiency, and success rates\n"
             "- **Examples**: Shows satisfaction score and turn count for full transparency"
