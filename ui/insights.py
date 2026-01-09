@@ -124,6 +124,12 @@ def render_positive_insights(turns_df, topics_df):
             candidate = f"{base} #{suffix}"
         used_positive_labels.add(candidate)
         return candidate
+
+    def make_positive_label_no_suffix(original_label):
+        base = curated_positive_labels.get(original_label, f"{original_label} Excellence")
+        if base == original_label:
+            base = f"{original_label} Excellence"
+        return base
     
     if not top_topics.empty:
         # Display as polished green cards
@@ -216,7 +222,8 @@ def render_positive_insights(turns_df, topics_df):
         
         one_line_reason = " • ".join(reason_parts)
         conv_id_key = int(conv['conv_id'])
-        success_display_label = make_positive_label(conv["topic_label"], i)
+        # For sample conversation cards, allow the same curated label without suffixes
+        success_display_label = make_positive_label_no_suffix(conv["topic_label"])
         
         # Create columns for card and button
         col1, col2 = st.columns([0.95, 0.05])
