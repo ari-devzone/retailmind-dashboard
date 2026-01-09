@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from datetime import datetime, timedelta
+from logic.aggregations import infer_conversation_theme
 
 def render_overview(turns_df, topics_df):
     # Initialize metrics history in session state
@@ -226,6 +227,27 @@ hr {
         unsafe_allow_html=True,
     )
 
+    # Build labels that mirror the Diagnostics page (inferred themes + unique prefixes)
+    diagnostics_labels = {}
+    used_labels = set()
+    for _, topic_row in topics_df.sort_values("n_examples", ascending=False).iterrows():
+        topic_turns = turns_df[turns_df["topic_id"] == topic_row["topic_id"]]
+        theme_label = topic_row["topic_label"]
+        if not topic_turns.empty:
+            inferred = infer_conversation_theme(topic_turns)
+            if inferred:
+                theme_label = inferred
+
+        base_label = f"Failure - {theme_label}"
+        unique_label = base_label
+        suffix = 1
+        while unique_label in used_labels:
+            suffix += 1
+            unique_label = f"{base_label} #{suffix}"
+
+        used_labels.add(unique_label)
+        diagnostics_labels[topic_row["topic_id"]] = unique_label
+
     avg_severity_display = f"{avg_severity_low_sat:.2f}" if pd.notna(avg_severity_low_sat) else "N/A"
     
     # Calculate deltas for display
@@ -446,44 +468,19 @@ hr {
                     selected_status = selected_points[0]["Status"]
                     
                     if selected_status == "Failed":
-                        # Show top failure topics
                         st.markdown(f"**Top Failure Topics:**")
-                        top_failure_topics = topics_df.nlargest(5, "n_examples")[["topic_id", "topic_label", "n_examples"]]
-                        
+                        top_failure_topics = topics_df.nlargest(5, "n_examples")[["topic_id", "topic_label", "n_examples"]].copy()
+                        top_failure_topics["diag_label"] = top_failure_topics["topic_id"].map(diagnostics_labels)
+
                         for _, row in top_failure_topics.iterrows():
                             col_topic, col_btn = st.columns([3, 1])
                             with col_topic:
-                                st.markdown(f"• **{row['topic_label']}** ({int(row['n_examples'])} examples)")
+                                st.markdown(f"• **{row['diag_label']}** ({int(row['n_examples'])} examples)")
                             with col_btn:
                                 if st.button("View", key=f"fail_{row['topic_id']}"):
                                     st.session_state.page = "Diagnostics"
                                     st.session_state.selected_topic = row['topic_id']
                                     st.rerun()
-                    
-                    elif selected_status == "Successful":
-                        # Show topics/patterns with high satisfaction
-                        st.markdown(f"**High Satisfaction Patterns:**")
-                        successful_turns = turns_df[turns_df["low_satisfaction"] == False].copy()
-                        
-                        # Get topics with successful turns
-                        if not successful_turns.empty:
-                            success_topics = successful_turns[successful_turns["topic_id"] != -1].groupby(["topic_id", "topic_label"]).size().reset_index(name="count")
-                            success_topics = success_topics.nlargest(5, "count")
-                            
-                            if not success_topics.empty:
-                                for _, row in success_topics.iterrows():
-                                    col_topic, col_btn = st.columns([3, 1])
-                                    with col_topic:
-                                        st.markdown(f"• **{row['topic_label']}** ({int(row['count'])} successful turns)")
-                                    with col_btn:
-                                        if st.button("View", key=f"success_{row['topic_id']}"):
-                                            st.session_state.page = "Diagnostics"
-                                            st.session_state.selected_topic = row['topic_id']
-                                            st.rerun()
-                            else:
-                                st.info("No specific success patterns found in topics.")
-                        else:
-                            st.info("No successful patterns detected.")
     
     with col3:
         with st.container(border=True):
@@ -621,9 +618,10 @@ hr {
 
     # ---- Top Failure Topics ----
     st.markdown('<h2 class="page-subheader">Top Failure Topics by Volume</h2>', unsafe_allow_html=True)
-    
+
     # Keep topic_id so navigation can target the correct details page
-    top_topics = topics_df.nlargest(5, "n_examples")[["topic_id", "topic_label", "n_examples", "avg_satisfaction"]]
+    top_topics = topics_df.nlargest(5, "n_examples")[["topic_id", "topic_label", "n_examples", "avg_satisfaction"]].copy()
+    top_topics["diag_label"] = top_topics["topic_id"].map(diagnostics_labels)
 
     cols = st.columns(min(5, len(top_topics)))
     
@@ -633,7 +631,7 @@ hr {
                 f"""
                 <div class="topic-card-wrapper">
                     <div class="topic-card">
-                        <div class="topic-title"><span class="dot dot-red"></span>{row['topic_label']}</div>
+                        <div class="topic-title"><span class="dot dot-red"></span>{row['diag_label']}</div>
                         <div class="topic-value">{row['avg_satisfaction']:.2f}</div>
                         <div class="topic-sub">Avg Satisfaction</div>
                         <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #fecaca;">

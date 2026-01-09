@@ -100,11 +100,36 @@ def render_positive_insights(turns_df, topics_df):
     
     # Step 2: Build top performing topics table
     top_topics = get_top_performing_topics_from_conversations(top_conversations, limit=5)
+
+    # Build a curated set of positive labels so "What Works Well" does not repeat failure topic names
+    failure_labels = set(topics_df["topic_label"].tolist()) if not topics_df.empty else set()
+    curated_positive_labels = {
+        "Movie Recommendations & Reviews": "Personalized Streaming Wins",
+        "Event & Ticket Booking": "Seamless Ticketing Journey",
+        "Account & Profile": "Effortless Account Support",
+        "Orders & Payments": "Checkout Success Stories",
+        "Product Discovery": "Guided Discovery Delight",
+    }
+    used_positive_labels = set()
+
+    def make_positive_label(original_label, idx):
+        base = curated_positive_labels.get(original_label, f"{original_label} Excellence")
+        # Ensure the displayed label differs from the raw conversation label and avoids failure titles
+        if base == original_label:
+            base = f"{original_label} Excellence"
+        candidate = base
+        suffix = 1
+        while candidate in used_positive_labels or candidate in failure_labels:
+            suffix += 1
+            candidate = f"{base} #{suffix}"
+        used_positive_labels.add(candidate)
+        return candidate
     
     if not top_topics.empty:
         # Display as polished green cards
         for idx, (_, topic_row) in enumerate(top_topics.iterrows(), 1):
             topic_label = topic_row["topic_label"]
+            display_label = make_positive_label(topic_label, idx)
             num_convs = int(topic_row["num_conversations"])
             avg_sat = topic_row["avg_satisfaction"]
             success_rate = topic_row["success_rate"]
@@ -120,7 +145,7 @@ def render_positive_insights(turns_df, topics_df):
                 margin-bottom: 1.0rem;
             ">
                 <div style="display:flex; align-items:center; justify-content:space-between; gap:0.75rem;">
-                    <div style="font-weight:800; font-size:1.12rem; color:#166534;">#{idx} {topic_label}</div>
+                    <div style="font-weight:800; font-size:1.12rem; color:#166534;">#{idx} {display_label}</div>
                     <div style="font-size:0.98rem; color:#16a34a; font-weight:700;">Success Rate {success_rate*100:.0f}%</div>
                 </div>
                 <div style="display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:0.75rem; margin:0.9rem 0 0.6rem 0;">
@@ -191,6 +216,7 @@ def render_positive_insights(turns_df, topics_df):
         
         one_line_reason = " • ".join(reason_parts)
         conv_id_key = int(conv['conv_id'])
+        success_display_label = make_positive_label(conv["topic_label"], i)
         
         # Create columns for card and button
         col1, col2 = st.columns([0.95, 0.05])
@@ -209,7 +235,7 @@ def render_positive_insights(turns_df, topics_df):
                     <div style="font-weight:800; font-size:1.12rem; color:#1e40af;">Example {i}: Conversation #{conv_id_key}</div>
                     <div style="font-size:0.98rem; color:#3b82f6; font-weight:700;">{one_line_reason}</div>
                 </div>
-                <div style="margin:0.6rem 0 0.6rem 0; color:#64748b; font-size:1.0rem; font-weight:600;">Topic: {conv['topic_label']}</div>
+                <div style="margin:0.6rem 0 0.6rem 0; color:#64748b; font-size:1.0rem; font-weight:600;">Topic: {success_display_label}</div>
                 <div style="display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:0.75rem;">
                     <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px; text-align:center;">
                         <div style="font-size:1.6rem; font-weight:800; color:#0f172a;">{conv['mean_satisfaction']:.2f}</div>
@@ -248,7 +274,7 @@ def render_positive_insights(turns_df, topics_df):
                         f"""
                         <div style="padding: 0.75rem 0.9rem; border: 1px solid #34d399; background: #ecfdf3; border-radius: 10px; margin: 0.5rem 0 0.75rem;">
                             <div style="font-weight: 800; color: #065f46; margin-bottom: 0.35rem;">✓ Success Summary</div>
-                            <div style="color: #334155;"><strong>Topic:</strong> {conv['topic_label']}</div>
+                            <div style="color: #334155;"><strong>Topic:</strong> {success_display_label}</div>
                             <div style="color: #334155;"><strong>Satisfaction:</strong> {conv['mean_satisfaction']:.2f}/5</div>
                         </div>
                         """,
