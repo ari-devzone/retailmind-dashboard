@@ -65,6 +65,16 @@ def render_overview(turns_df, topics_df):
             border: none;
             border-top: 2px solid #e2e8f0;
         }
+        .placeholder-card {
+            font-size: 0.95rem;
+            color: #1e293b;
+            background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%);
+            border: 1px solid #c7d2fe;
+            border-radius: 10px;
+            padding: 0.75rem 0.9rem;
+            line-height: 1.45;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+        }
         </style>
         """,
         unsafe_allow_html=True
@@ -72,8 +82,8 @@ def render_overview(turns_df, topics_df):
     
     st.markdown('<h1 class="page-header">📊 System Overview</h1>', unsafe_allow_html=True)
     
-    # Add comparison toggle and history selector in a professional container
-    with st.container(border=True):
+    # Add comparison toggle and history selector
+    with st.container():
         col_compare, col_spacer, col_history = st.columns([1.2, 0.3, 1])
         with col_compare:
             if len(st.session_state.metrics_history) > 1:
@@ -81,7 +91,12 @@ def render_overview(turns_df, topics_df):
                 show_comparison = st.toggle("", value=True, help="Compare with previous snapshot", label_visibility="collapsed")
             else:
                 show_comparison = False
-                st.caption("_Upload data to see changes_")
+                st.markdown(
+                    """
+                    <div class="placeholder-card">📁 Upload data in <strong>Upload Lab</strong> to unlock comparison snapshots.</div>
+                    """,
+                    unsafe_allow_html=True,
+                )
         
         with col_history:
             if len(st.session_state.metrics_history) > 1:
@@ -95,7 +110,7 @@ def render_overview(turns_df, topics_df):
             else:
                 history_view = "Past Day"
     
-    st.markdown('<h2 class="page-subheader">Key Metrics</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="page-subheader">📌 Key Metrics</h2>', unsafe_allow_html=True)
 
     st.markdown(
         """
@@ -207,10 +222,6 @@ def render_overview(turns_df, topics_df):
     transition: all 0.2s ease !important;
     height: auto !important;
     min-height: 36px !important;
-}
-    position: absolute !important;
-    bottom: 0 !important;
-    right: 0 !important;
 }
 div[data-testid="column"] > div > div[data-testid="stVerticalBlock"] > div[data-testid="stButton"] button:hover {
     background: linear-gradient(135deg, #475569 0%, #334155 100%) !important;
@@ -340,7 +351,7 @@ hr {
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
 
     # ---- Satisfaction Distribution ----
-    st.markdown('<h2 class="page-subheader">Failure Analytics</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="page-subheader">🛑 Failure Analytics</h2>', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3, gap="medium")
     
@@ -633,7 +644,7 @@ hr {
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
 
     # ---- Top Failure Topics ----
-    st.markdown('<h2 class="page-subheader">Top Failure Topics by Volume</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="page-subheader">🚩 Top Failure Topics by Volume</h2>', unsafe_allow_html=True)
 
     # Keep topic_id so navigation can target the correct details page
     top_topics = topics_df.nlargest(5, "n_examples")[["topic_id", "topic_label", "n_examples", "avg_satisfaction"]].copy()
@@ -671,9 +682,9 @@ hr {
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
     
     # History tracking section
+    st.markdown('<h2 class="page-subheader">📈 Metrics History</h2>', unsafe_allow_html=True)
+
     if len(st.session_state.metrics_history) > 1:
-        st.markdown('<h2 class="page-subheader">📈 Metrics History</h2>', unsafe_allow_html=True)
-        
         # Determine which snapshots to display based on view period
         now = datetime.now()
         if history_view == "Past Day":
@@ -752,6 +763,8 @@ hr {
                 )
 
                 st.altair_chart(chart, use_container_width=True)
+    else:
+        st.info("No historical snapshots yet. Upload data in Upload Lab to start tracking trends.")
 
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
 
