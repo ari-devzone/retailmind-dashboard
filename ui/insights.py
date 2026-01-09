@@ -327,7 +327,6 @@ def render_positive_insights(turns_df, topics_df):
         st.markdown("### 📌 Technical Notes")
         st.markdown(
             "- **Top conversations methodology**: Conversations ranked by satisfaction score (descending), with tie-breakers on success metrics\n"
-            "- **Topic assignment**: Most frequent topic in conversation used; NaN topics replaced with 'General Product Questions & Miscellaneous'\n"
             "- **Patterns**: Extracted from issue presence, knowledge base alignment, turn efficiency, and success rates\n"
             "- **Examples**: Shows satisfaction score and turn count for full transparency"
         )

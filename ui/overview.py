@@ -161,33 +161,32 @@ def render_overview(turns_df, topics_df):
     display: flex;
     flex-direction: column;
     height: 100%;
-    gap: 0.8rem;
+    gap: 0rem;
 }
 
 .topic-card {
     border-radius: 12px;
-    padding: 0.9rem 1.05rem 1rem;
+    padding: 1rem;
     border: 1.5px solid #f87171;
     background: #fef2f2;
     box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    height: 160px;
+    gap: 0.5rem;
+    height: 180px;
     position: relative;
-    justify-content: flex-start;
-    overflow: hidden;
+    justify-content: space-between;
 }
-.topic-title { font-weight: 750; color: #991b1b; display: flex; align-items: center; gap: 0.4rem; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.topic-value { font-size: 1.6rem; font-weight: 800; color: #0b1324; line-height: 1.1; }
-.topic-sub { color: #475569; font-size: 1.02rem; margin-bottom: 0.5rem; }
+.topic-title { font-weight: 700; color: #991b1b; display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.95rem; line-height: 1.35; }
+.topic-value { font-size: 1.8rem; font-weight: 800; color: #0b1324; line-height: 1; }
+.topic-sub { color: #475569; font-size: 0.95rem; font-weight: 500; }
 .topic-footer { position: absolute; bottom: 0.5rem; right: 0.5rem; }
 .topic-btn {
     background: linear-gradient(135deg, #64748b 0%, #475569 100%);
     color: #ffffff;
     border: none;
     border-radius: 6px;
-    padding: 0.4rem 0.8rem;
+    padding: 0.5rem 0.8rem;
     font-weight: 700;
     font-size: 0.92rem;
     text-align: center;
@@ -644,6 +643,14 @@ hr {
     
     for idx, (col, (_, row)) in enumerate(zip(cols, top_topics.iterrows())):
         with col:
+            if st.button("🔍 Investigate", key=f"topic_{idx}", use_container_width=True):
+                # Navigate to Diagnostics and open this specific topic by id
+                st.session_state.page = "Diagnostics"
+                st.session_state.selected_topic = row['topic_id']
+                st.session_state.topic_rank = diagnostics_ranks.get(row['topic_id'], 0)
+                st.session_state.topic_display_label = row['diag_label']
+                st.rerun()
+            
             st.markdown(
                 f"""
                 <div class="topic-card-wrapper">
@@ -651,7 +658,7 @@ hr {
                         <div class="topic-title"><span class="dot dot-red"></span>{row['diag_label']}</div>
                         <div class="topic-value">{row['avg_satisfaction']:.2f}</div>
                         <div class="topic-sub">Avg Satisfaction</div>
-                        <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #fecaca;">
+                        <div style="margin-top: auto; padding-top: 0.5rem; border-top: 1px solid #fecaca;">
                             <div style="font-size: 0.85rem; color: #991b1b; font-weight: 600;">📊 Examples</div>
                             <div style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-top: 0.2rem;">{int(row['n_examples'])}</div>
                         </div>
@@ -660,15 +667,6 @@ hr {
                 """,
                 unsafe_allow_html=True,
             )
-            st.markdown('<div style="margin-top: 0.8rem;">', unsafe_allow_html=True)
-            if st.button("🔍 Investigate", key=f"topic_{idx}"):
-                # Navigate to Diagnostics and open this specific topic by id
-                st.session_state.page = "Diagnostics"
-                st.session_state.selected_topic = row['topic_id']
-                st.session_state.topic_rank = diagnostics_ranks.get(row['topic_id'], 0)
-                st.session_state.topic_display_label = row['diag_label']
-                st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
     
