@@ -1,0 +1,170 @@
+[
+  {
+    "topic_id": 1,
+    "topic_label": "Topic 1: MISSING_CONTEXT / TONE_ISSUE",
+    "baseline_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.",
+    "repaired_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.\n\nEnsure that the bot provides contextually relevant questions and maintains a tone that resonates with the user's mood.",
+    "example_conversations": [
+      {
+        "dataset": "CCPE",
+        "conv_id": 80,
+        "snippet": "System: What kind of movies do you like, and why do you like this type of movie?\nUser: Comedies, I like to laugh.\nSystem: Can you name a particular movie that you like?\nUser: Liar, Liar\nSystem: Jim Carrey was really funny.\nUser: I agree.\nSystem: Can you give me a couple of reasons why you like this movie?\nUser: I like Jim Carrey in the movie. He's funny. Also, it has a good message of lying is bad.\nSystem: Can you name a movie that you do not like?\nUser: I can't think of anything.\nSystem: please try to recall the last movie that turned you off\nUser: [inaudible]\nSystem: What do you dislike about this movie? please give me 2 reasons.\nUser: It was too gory. I couldn't get into the movie. Made me feel sick."
+      },
+      {
+        "dataset": "CCPE",
+        "conv_id": 190,
+        "snippet": "System: What type of movies do you enjoy?\nSystem: What appeals to you with these type of movies?\nUser: Gives me the life to keep living and like just every story is the same not the same and to live and experience a new like a person's story.\nSystem: Is there a specific movie you enjoy from this genre?\nUser: Yeah, I love The Wild. It's a new film. Into the Wild. The authentic relationship between father and daughter, and then or father and son, and then father and wife.\nSystem: What did you like about this movie?\nSystem: Are there any type of movies that you don't enjoy?\nUser: I don't like\nUser: romantic comedies\nSystem: Is there a specific movie that you heavily dislike?\nSystem: What do you dislike about this movie?\nUser: It's just silly.\nSystem: Have you seen Titanic\nUser: Yes."
+      }
+    ],
+    "test_user_messages": [
+      "Review user interactions for instances of vague or context-lacking questions.",
+      "Monitor user sentiment in responses to ensure alignment with the bot's tone.",
+      "Conduct user satisfaction surveys to gauge improvements in engagement."
+    ],
+    "guardrail_rules": [
+      "Always provide sufficient context before asking questions.",
+      "Analyze user sentiment and adjust the tone of responses accordingly.",
+      "Avoid abrupt or overly simplistic responses that may frustrate users."
+    ]
+  },
+  {
+    "topic_id": 2,
+    "topic_label": "Topic 2: MISSING_CONTEXT / TONE_ISSUE",
+    "baseline_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.",
+    "repaired_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.\n\nWhen responding to user feedback about movies, ensure to ask clarifying questions that invite the user to share more about their experience and feelings.",
+    "example_conversations": [
+      {
+        "dataset": "CCPE",
+        "conv_id": 41,
+        "snippet": "System: what kind of movies do u generally like watching\nUser: I prefer horror movies myself and also some action movies.\nSystem: why do u like horror and action\nUser: I like to be scared and I like be I like to think a lot and I like a good story and a lot of those type of movies that are in horror. Also have good acting because the costumes and such are kind of difficult to buy so I have to rely more on acting.\nUser: then effects\nSystem: could u name a specific movie that fits one of those categories that you did like, and why you liked that kind of movie\nUser: Let me think.\nUser: The Houses October Built would be a good horror movie that I like.\nSystem: why did u like that kind of movie\nUser: It felt realistic, it was scary but it also felt like it could really happen in the real world. And it also made you think too, and the acting I thought was pretty decent given that it was a low budget movie.\nSystem: thanks for sharing. could u name a movie that you didn't like that fits that category, and why you didn't like that type of movie.\nSystem: have you seen xmen?\nUser: The old X-Men that came out several years ago not any of the new not any of the new ones.\nSystem: did you like this kind of movie?"
+      },
+      {
+        "dataset": "CCPE",
+        "conv_id": 63,
+        "snippet": "System: What type of movies do you like?\nUser: I like like Constantine, and I like a lot of Disney movies, too.\nSystem: any particular disney movie you like?\nUser: Good question. I like\nUser: I think one of my favorite movies was Moana. It was It was really good.\nSystem: what did you like about moana?\nUser: It was just really nice to watch it. I thought it was a really good movie.\nSystem: Can you name me a movie you didn't like?\nUser: Movie I didn't like I think the\nUser: The Incredibles 2 wasn't really that good.\nSystem: did you think it was overhyped too?\nUser: Yeah, I did actually.\nSystem: anything else you didn't like about it?\nUser: I just felt like the story was really bland."
+      }
+    ],
+    "test_user_messages": [
+      "Assess if the bot's responses include contextually relevant follow-up questions.",
+      "Evaluate the tone of the bot's responses for empathy and alignment with user sentiment.",
+      "Check for the presence of specific prompts that encourage users to elaborate on their feedback."
+    ],
+    "guardrail_rules": [
+      "Always acknowledge the user's feedback and express understanding.",
+      "Avoid generic responses that do not relate to the user's specific comments.",
+      "Ensure that follow-up questions are relevant to the user's previous messages."
+    ]
+  },
+  {
+    "topic_id": 3,
+    "topic_label": "Topic 3: MISSING_CONTEXT / UNSUPPORTED_INTENT",
+    "baseline_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.",
+    "repaired_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.\n\nYou are a virtual assistant that understands user requests about event availability and can maintain context across multiple interactions.",
+    "example_conversations": [
+      {
+        "dataset": "SGD",
+        "conv_id": 70,
+        "snippet": "User: Hello! Can you help me find an apartment?\nSystem: I'd be happy to help. Where are you interested in searching for an apartment? How many bedrooms do you need?\nUser: I'd like to find a two bedroom property in Vacaville.\nSystem: I can recommend the Alamo Garden Apartments at 1501 Alamo Drive. It has 2 beds, 1 bath and is $2,550 per month.\nUser: Is it a furnished apartment?\nSystem: No, it is not.\nUser: Great! Can you tell me if I have an available time on the 10th of this month to go and look at it?\nSystem: You have some free time available on March 10th starting at 8:30 pm and ending at midnight.\nUser: That works for me.\nSystem: Would you like me to add that to your calendar?\nUser: No, I don't need to make an event for it.\nSystem: Is there anything else I can assist you with today?\nUser: Yes, I'd like to schedule a viewing of the apartment.\nSystem: You'd like to visit Alamo Garden Apartments on March 10th. Is that correct?"
+      },
+      {
+        "dataset": "SGD",
+        "conv_id": 76,
+        "snippet": "User: I would like you to search for event dates.\nSystem: What event interests you and do you have a preferred city?\nUser: I was told Sparks vs Lynx is good and I would like to see them in Los Angeles.\nSystem: Sparks vs Lynx are playing on 3 days at the Staples Center, including March 5th.\nUser: What are some other dates? Also Jojo Siwa is really good. Please look for something in NYC.\nSystem: Jojo Siwa is playing on 5 days at the Forest Hills Stadium. One event date is March 2nd.\nUser: What are some other events?\nSystem: Jojo Siwa is playing March 3rd at the Forest Hills Stadium.\nUser: That sounds good to me.\nSystem: Would you like to purchase tickets?\nUser: Not at this time, though I would like to purchase bus tickets.\nSystem: What time are you looking to leave?\nUser: Please look for a bus that departs around 10:30 am.\nSystem: Where and when would you like to depart from on MArch 3rd? How many tickets do you wish to purchase?"
+      }
+    ],
+    "test_user_messages": [
+      "Test the assistant's ability to retain context across multiple user turns.",
+      "Evaluate the accuracy of intent recognition for date-specific queries.",
+      "Monitor user satisfaction ratings for interactions involving availability checks."
+    ],
+    "guardrail_rules": [
+      "Ensure that the assistant confirms the user's intent before providing information.",
+      "If a user asks about availability, the assistant should first check for relevant context before responding.",
+      "Limit responses to only those intents that the assistant is designed to handle."
+    ]
+  },
+  {
+    "topic_id": 4,
+    "topic_label": "Topic 4: UNSUPPORTED_INTENT / MISSING_CONTEXT",
+    "baseline_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.",
+    "repaired_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.\n\nYou are a virtual assistant designed to help users with a variety of inquiries. Ensure you maintain context from previous interactions and recognize a wide range of user intents, including real estate and rental services.",
+    "example_conversations": [
+      {
+        "dataset": "SGD",
+        "conv_id": 70,
+        "snippet": "User: Hello! Can you help me find an apartment?\nSystem: I'd be happy to help. Where are you interested in searching for an apartment? How many bedrooms do you need?\nUser: I'd like to find a two bedroom property in Vacaville.\nSystem: I can recommend the Alamo Garden Apartments at 1501 Alamo Drive. It has 2 beds, 1 bath and is $2,550 per month.\nUser: Is it a furnished apartment?\nSystem: No, it is not.\nUser: Great! Can you tell me if I have an available time on the 10th of this month to go and look at it?\nSystem: You have some free time available on March 10th starting at 8:30 pm and ending at midnight.\nUser: That works for me.\nSystem: Would you like me to add that to your calendar?\nUser: No, I don't need to make an event for it.\nSystem: Is there anything else I can assist you with today?\nUser: Yes, I'd like to schedule a viewing of the apartment.\nSystem: You'd like to visit Alamo Garden Apartments on March 10th. Is that correct?"
+      },
+      {
+        "dataset": "SGD",
+        "conv_id": 220,
+        "snippet": "User: There is a conference for me and I am in need of rental car of any type? Please help.\nSystem: When will you pick it up and till which date you will be using i?\nUser: I will be using it till the 8th and intend to pick up from Vegas.\nSystem: When will you pick it up?\nUser: At 11 am probably.\nSystem: On what date do you need it?\nUser: I should get it from March 2nd.\nSystem: There are 6 cars awaiting you. A Compact car Cooper at McCarran International Airport can be picked on March 2nd. Does it find suitable?\nUser: Any other is available?\nSystem: Another one is a Standard car Elantra at McCarran International Airport. You can pick it up on March 2nd.\nUser: How much will it cost?\nSystem: You have to pay $192 in total.\nUser: Great, thank you.\nSystem: Shall I reserve the car for you?"
+      }
+    ],
+    "test_user_messages": [
+      "Test the assistant's ability to retain context across multiple user interactions.",
+      "Evaluate the intent recognition accuracy for real estate and rental-related queries.",
+      "Monitor user satisfaction ratings after implementing changes to ensure improvements in handling unsupported intents."
+    ],
+    "guardrail_rules": [
+      "If a user query contains unsupported intents, respond with a message that directs them to relevant resources or suggest alternative actions.",
+      "Always confirm if the user needs assistance with a specific context before providing information.",
+      "Log unsupported intents for future analysis and model improvement."
+    ]
+  },
+  {
+    "topic_id": 5,
+    "topic_label": "Topic 5: MISSING_CONTEXT / TONE_ISSUE",
+    "baseline_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.",
+    "repaired_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.\n\nEnsure that responses are contextually relevant and maintain a friendly, supportive tone.",
+    "example_conversations": [
+      {
+        "dataset": "CCPE",
+        "conv_id": 41,
+        "snippet": "System: what kind of movies do u generally like watching\nUser: I prefer horror movies myself and also some action movies.\nSystem: why do u like horror and action\nUser: I like to be scared and I like be I like to think a lot and I like a good story and a lot of those type of movies that are in horror. Also have good acting because the costumes and such are kind of difficult to buy so I have to rely more on acting.\nUser: then effects\nSystem: could u name a specific movie that fits one of those categories that you did like, and why you liked that kind of movie\nUser: Let me think.\nUser: The Houses October Built would be a good horror movie that I like.\nSystem: why did u like that kind of movie\nUser: It felt realistic, it was scary but it also felt like it could really happen in the real world. And it also made you think too, and the acting I thought was pretty decent given that it was a low budget movie.\nSystem: thanks for sharing. could u name a movie that you didn't like that fits that category, and why you didn't like that type of movie.\nSystem: have you seen xmen?\nUser: The old X-Men that came out several years ago not any of the new not any of the new ones.\nSystem: did you like this kind of movie?"
+      },
+      {
+        "dataset": "CCPE",
+        "conv_id": 80,
+        "snippet": "System: What kind of movies do you like, and why do you like this type of movie?\nUser: Comedies, I like to laugh.\nSystem: Can you name a particular movie that you like?\nUser: Liar, Liar\nSystem: Jim Carrey was really funny.\nUser: I agree.\nSystem: Can you give me a couple of reasons why you like this movie?\nUser: I like Jim Carrey in the movie. He's funny. Also, it has a good message of lying is bad.\nSystem: Can you name a movie that you do not like?\nUser: I can't think of anything.\nSystem: please try to recall the last movie that turned you off\nUser: [inaudible]\nSystem: What do you dislike about this movie? please give me 2 reasons.\nUser: It was too gory. I couldn't get into the movie. Made me feel sick."
+      }
+    ],
+    "test_user_messages": [
+      "Review user interactions for instances of confusion or lack of context.",
+      "Monitor user feedback for tone-related issues.",
+      "Conduct regular audits of conversation flows to ensure contextual relevance."
+    ],
+    "guardrail_rules": [
+      "Always ask clarifying questions if the user's intent is unclear.",
+      "Maintain a positive and engaging tone in all responses.",
+      "Avoid technical jargon unless the user has indicated familiarity with the topic."
+    ]
+  },
+  {
+    "topic_id": 0,
+    "topic_label": "Topic 0: MISSING_CONTEXT / UNSUPPORTED_INTENT",
+    "baseline_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.",
+    "repaired_system_prompt": "You are a helpful assistant. Be concise, accurate, and user-focused. If information is missing, ask clarifying questions. Avoid repeating the same question.\n\nYou are a helpful assistant that understands user context and intent. Always respond with empathy and clarity.",
+    "example_conversations": [
+      {
+        "dataset": "CCPE",
+        "conv_id": 368,
+        "snippet": "User: Hello.\nSystem: Hello there! Mind if I ask a few questions about movies?\nUser: Sure, go ahead.\nSystem: What kind of movies do you like? Any specific genre?\nUser: I like sci-fi.\nSystem: Is there a movie you can name that you really like?\nUser: I really like the movie Inception.\nSystem: And can you tell me what you liked about those types of movies?\nUser: I like I like how they portray a world that could be our own. You know It's not exactly fantasy, because it could actually be It could actually happen in our near future. You know, I just feel like I feel like I could get lost in the movie, in the story line and I just forget about my own boring life.\nSystem: Thanks! Your details are awesome.\nUser: Thank you. Thank you so much for that.\nSystem: now that I know what movie you like, can you name one you don't like? What would be last on your list?\nUser: I really I don't like romantic comedies. I really don't like that movie Maid in Manhattan with Jennifer Lopez. I think it's such a bad movie. It's not funny. It's not entertaining at all.\nUser: It was I just found it really boring and generic and just I wasn't interested. I was just really bored."
+      },
+      {
+        "dataset": "SGD",
+        "conv_id": 51,
+        "snippet": "User: Can you find me a salon in Fremont?\nSystem: I've found a nice salon called 3Sixty Salon and Boutique in Fremont.\nUser: Can you find me another salon? I would like a unisex salon.\nSystem: Alex'S Classic Barber Shop in Fremont is among the 8 salons I found, that you may like.\nUser: On what street is it located?\nSystem: It's located at 4175, 42151 Blacow Road.\nUser: Yes, I like the sound of that. Please book me an appointment at a salon.\nSystem: What date and time would you like me to book the appointment for?\nUser: I would like an appointment for next Wednesday afternoon 2:15.\nSystem: Please confirm that I got everything correctly: An appointment for 2:15 next Wednesday, 2:15 pm at Alex'S Classic Barber Shop.\nUser: Sorry, I've changed my mind. I'd like the appointment to be for 3:30 in the afternoon, on the 4th of March.\nSystem: Please confirm that I got everything correctly: An appointment for 3:30 pm in the afternoon, next Monday.\nUser: Yes, that sounds perfect.\nSystem: Unfortunately, I was unable to book the appointment. Alex'S Classic Barber Shop, a nice salon, has an opening for next Monday at 4 pm."
+      }
+    ],
+    "test_user_messages": [
+      "Monitor user satisfaction ratings after interactions to identify patterns of confusion.",
+      "Review conversation logs for instances of missing context or unsupported intents.",
+      "Conduct user testing to evaluate the effectiveness of tone adjustments in responses."
+    ],
+    "guardrail_rules": [
+      "Ensure that the bot acknowledges previous user messages to maintain context.",
+      "Reject unsupported intents gracefully by suggesting alternatives or clarifying questions.",
+      "Maintain a friendly and supportive tone in all responses."
+    ]
+  }
+]

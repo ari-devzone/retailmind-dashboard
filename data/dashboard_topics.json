@@ -1,0 +1,116 @@
+[
+  {
+    "topic_id": 1,
+    "topic_label": "Topic 1: MISSING_CONTEXT / TONE_ISSUE",
+    "n_examples": 31,
+    "top_issues": [
+      "MISSING_CONTEXT",
+      "TONE_ISSUE",
+      "UNSUPPORTED_INTENT"
+    ],
+    "example_texts": [
+      "Probably not.",
+      "Okay.",
+      "Nope."
+    ],
+    "example_reason": "The bot's question lacked context, making it difficult for the user to engage meaningfully. Additionally, the tone of the bot's response may not have aligned with the user's sentiment, leading to a disconnect.",
+    "n_user_turns": 31,
+    "low_satisfaction_rate": 1.0,
+    "avg_satisfaction": 2.7876344086021505
+  },
+  {
+    "topic_id": 2,
+    "topic_label": "Topic 2: MISSING_CONTEXT / TONE_ISSUE",
+    "n_examples": 25,
+    "top_issues": [
+      "MISSING_CONTEXT",
+      "TONE_ISSUE",
+      "UNSUPPORTED_INTENT"
+    ],
+    "example_texts": [
+      "It was okay. Too many Too many special effects. Not enough good acting. Not enough good storyline.",
+      "Movie I didn't like I think the",
+      "I've never seen it."
+    ],
+    "example_reason": "The bot's question lacked context, failing to address the user's specific concerns about the movie's special effects and storyline. Additionally, the tone of the bot's response may not have aligned with the user's critical feedback, leading to a disconnect.",
+    "n_user_turns": 25,
+    "low_satisfaction_rate": 1.0,
+    "avg_satisfaction": 2.9360000000000004
+  },
+  {
+    "topic_id": 3,
+    "topic_label": "Topic 3: MISSING_CONTEXT / UNSUPPORTED_INTENT",
+    "n_examples": 25,
+    "top_issues": [
+      "MISSING_CONTEXT",
+      "UNSUPPORTED_INTENT",
+      "WRONG_FACT"
+    ],
+    "example_texts": [
+      "Great! Can you tell me if I have an available time on the 10th of this month to go and look at it?",
+      "I would like you to search for event dates.",
+      "What are some other dates? Also Jojo Siwa is really good. Please look for something in NYC."
+    ],
+    "example_reason": "The bot failed to provide context regarding the user's inquiry about availability, leading to confusion. Additionally, the bot did not support the user's intent to check availability for a specific date.",
+    "n_user_turns": 25,
+    "low_satisfaction_rate": 1.0,
+    "avg_satisfaction": 3.138
+  },
+  {
+    "topic_id": 4,
+    "topic_label": "Topic 4: UNSUPPORTED_INTENT / MISSING_CONTEXT",
+    "n_examples": 22,
+    "top_issues": [
+      "UNSUPPORTED_INTENT",
+      "MISSING_CONTEXT",
+      "SUCCESS_BEST_PRACTICE"
+    ],
+    "example_texts": [
+      "Hello! Can you help me find an apartment?",
+      "There is a conference for me and I am in need of rental car of any type? Please help.",
+      "How much will it cost?"
+    ],
+    "example_reason": "The bot did not have any previous context to understand the user's request for help finding an apartment, leading to a lack of relevant responses. Additionally, the bot may not be equipped to handle real estate inquiries, contributing to user dissatisfaction.",
+    "n_user_turns": 22,
+    "low_satisfaction_rate": 1.0,
+    "avg_satisfaction": 3.0954545454545452
+  },
+  {
+    "topic_id": 5,
+    "topic_label": "Topic 5: MISSING_CONTEXT / TONE_ISSUE",
+    "n_examples": 21,
+    "top_issues": [
+      "MISSING_CONTEXT",
+      "TONE_ISSUE",
+      "UNSUPPORTED_INTENT"
+    ],
+    "example_texts": [
+      "then effects",
+      "[inaudible]",
+      "first time in the world"
+    ],
+    "example_reason": "The bot's question lacks context, making it difficult for the user to understand how to respond. Additionally, the tone may not align with the user's expectations, leading to confusion.",
+    "n_user_turns": 21,
+    "low_satisfaction_rate": 1.0,
+    "avg_satisfaction": 2.965079365079365
+  },
+  {
+    "topic_id": 0,
+    "topic_label": "Topic 0: MISSING_CONTEXT / UNSUPPORTED_INTENT",
+    "n_examples": 8,
+    "top_issues": [
+      "MISSING_CONTEXT",
+      "UNSUPPORTED_INTENT",
+      "TONE_ISSUE"
+    ],
+    "example_texts": [
+      "This wasn't what I expected it to be, it was weird and a little bit gross.",
+      "Can you find me a salon in Fremont?",
+      "Yes, I like the sound of that. Please book me an appointment at a salon."
+    ],
+    "example_reason": "The bot's response lacked context, leading to confusion for the user. Additionally, the tone of the bot's reply may have come off as dismissive, which contributed to the user's negative perception.",
+    "n_user_turns": 8,
+    "low_satisfaction_rate": 1.0,
+    "avg_satisfaction": 3.0104166666666665
+  }
+]

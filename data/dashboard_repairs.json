@@ -1,0 +1,127 @@
+[
+  {
+    "topic_id": 1,
+    "topic_label": "Topic 1: MISSING_CONTEXT / TONE_ISSUE",
+    "root_cause": "The bot's questions lack sufficient context and the tone does not align with user sentiment, resulting in disengagement.",
+    "suggested_prompt_changes": [
+      "Incorporate more context in the bot's questions to guide the user effectively.",
+      "Adjust the tone of the bot's responses to match the user's emotional state and sentiment."
+    ],
+    "system_prompt_snippet": "Ensure that the bot provides contextually relevant questions and maintains a tone that resonates with the user's mood.",
+    "guardrail_rules": [
+      "Always provide sufficient context before asking questions.",
+      "Analyze user sentiment and adjust the tone of responses accordingly.",
+      "Avoid abrupt or overly simplistic responses that may frustrate users."
+    ],
+    "evaluation_checks": [
+      "Review user interactions for instances of vague or context-lacking questions.",
+      "Monitor user sentiment in responses to ensure alignment with the bot's tone.",
+      "Conduct user satisfaction surveys to gauge improvements in engagement."
+    ]
+  },
+  {
+    "topic_id": 2,
+    "topic_label": "Topic 2: MISSING_CONTEXT / TONE_ISSUE",
+    "root_cause": "The bot's responses lack context and do not adequately address the user's specific feedback about movies, resulting in a tone mismatch and unsupported intents.",
+    "suggested_prompt_changes": [
+      "Incorporate follow-up questions that ask for specific details about the user's feedback on movies.",
+      "Adjust the tone of responses to be more empathetic and aligned with critical feedback.",
+      "Provide options for users to elaborate on their thoughts about special effects and storylines."
+    ],
+    "system_prompt_snippet": "When responding to user feedback about movies, ensure to ask clarifying questions that invite the user to share more about their experience and feelings.",
+    "guardrail_rules": [
+      "Always acknowledge the user's feedback and express understanding.",
+      "Avoid generic responses that do not relate to the user's specific comments.",
+      "Ensure that follow-up questions are relevant to the user's previous messages."
+    ],
+    "evaluation_checks": [
+      "Assess if the bot's responses include contextually relevant follow-up questions.",
+      "Evaluate the tone of the bot's responses for empathy and alignment with user sentiment.",
+      "Check for the presence of specific prompts that encourage users to elaborate on their feedback."
+    ]
+  },
+  {
+    "topic_id": 3,
+    "topic_label": "Topic 3: MISSING_CONTEXT / UNSUPPORTED_INTENT",
+    "root_cause": "The virtual assistant lacks the ability to maintain context for user inquiries related to availability and does not support date-specific queries effectively.",
+    "suggested_prompt_changes": [
+      "Implement a context management system to retain user inquiries about dates and availability.",
+      "Enhance intent recognition to include specific queries related to event dates and availability checks.",
+      "Provide follow-up prompts that confirm the user's request and clarify the context before responding."
+    ],
+    "system_prompt_snippet": "You are a virtual assistant that understands user requests about event availability and can maintain context across multiple interactions.",
+    "guardrail_rules": [
+      "Ensure that the assistant confirms the user's intent before providing information.",
+      "If a user asks about availability, the assistant should first check for relevant context before responding.",
+      "Limit responses to only those intents that the assistant is designed to handle."
+    ],
+    "evaluation_checks": [
+      "Test the assistant's ability to retain context across multiple user turns.",
+      "Evaluate the accuracy of intent recognition for date-specific queries.",
+      "Monitor user satisfaction ratings for interactions involving availability checks."
+    ]
+  },
+  {
+    "topic_id": 4,
+    "topic_label": "Topic 4: UNSUPPORTED_INTENT / MISSING_CONTEXT",
+    "root_cause": "The virtual assistant lacks the ability to handle specific user intents related to real estate and rental services, and it does not maintain sufficient context from previous interactions to understand user requests.",
+    "suggested_prompt_changes": [
+      "Implement a context management system to retain user queries and responses across sessions.",
+      "Enhance the intent recognition model to include support for real estate and rental inquiries.",
+      "Provide a fallback response that guides users to appropriate resources when unsupported intents are detected."
+    ],
+    "system_prompt_snippet": "You are a virtual assistant designed to help users with a variety of inquiries. Ensure you maintain context from previous interactions and recognize a wide range of user intents, including real estate and rental services.",
+    "guardrail_rules": [
+      "If a user query contains unsupported intents, respond with a message that directs them to relevant resources or suggest alternative actions.",
+      "Always confirm if the user needs assistance with a specific context before providing information.",
+      "Log unsupported intents for future analysis and model improvement."
+    ],
+    "evaluation_checks": [
+      "Test the assistant's ability to retain context across multiple user interactions.",
+      "Evaluate the intent recognition accuracy for real estate and rental-related queries.",
+      "Monitor user satisfaction ratings after implementing changes to ensure improvements in handling unsupported intents."
+    ]
+  },
+  {
+    "topic_id": 5,
+    "topic_label": "Topic 5: MISSING_CONTEXT / TONE_ISSUE",
+    "root_cause": "The bot's responses lack sufficient context and have an inappropriate tone, resulting in user confusion and dissatisfaction.",
+    "suggested_prompt_changes": [
+      "Incorporate clarifying questions to gather necessary context before responding.",
+      "Adjust tone to be more conversational and empathetic to align with user expectations.",
+      "Provide examples or scenarios to help users understand the context better."
+    ],
+    "system_prompt_snippet": "Ensure that responses are contextually relevant and maintain a friendly, supportive tone.",
+    "guardrail_rules": [
+      "Always ask clarifying questions if the user's intent is unclear.",
+      "Maintain a positive and engaging tone in all responses.",
+      "Avoid technical jargon unless the user has indicated familiarity with the topic."
+    ],
+    "evaluation_checks": [
+      "Review user interactions for instances of confusion or lack of context.",
+      "Monitor user feedback for tone-related issues.",
+      "Conduct regular audits of conversation flows to ensure contextual relevance."
+    ]
+  },
+  {
+    "topic_id": 0,
+    "topic_label": "Topic 0: MISSING_CONTEXT / UNSUPPORTED_INTENT",
+    "root_cause": "The bot's responses are lacking contextual awareness and are not aligned with user intent, leading to confusion and dissatisfaction.",
+    "suggested_prompt_changes": [
+      "Implement context tracking to maintain conversation history and user intent.",
+      "Enhance the bot's ability to recognize and respond to specific user requests, such as finding services or making appointments.",
+      "Adjust the tone of responses to be more empathetic and supportive."
+    ],
+    "system_prompt_snippet": "You are a helpful assistant that understands user context and intent. Always respond with empathy and clarity.",
+    "guardrail_rules": [
+      "Ensure that the bot acknowledges previous user messages to maintain context.",
+      "Reject unsupported intents gracefully by suggesting alternatives or clarifying questions.",
+      "Maintain a friendly and supportive tone in all responses."
+    ],
+    "evaluation_checks": [
+      "Monitor user satisfaction ratings after interactions to identify patterns of confusion.",
+      "Review conversation logs for instances of missing context or unsupported intents.",
+      "Conduct user testing to evaluate the effectiveness of tone adjustments in responses."
+    ]
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "speaker": "USER",
+    "text": "I ordered a laptop 3 weeks ago and it still hasn't arrived. I paid for express shipping! Order #89234",
+    "satisfaction_score": 1.5,
+    "low_satisfaction": true,
+    "issues": ["delivery_delay", "shipping_issue"],
+    "severity": "HIGH",
+    "reason": "Long delivery delay despite express shipping",
+    "topic_id": 5,
+    "topic_label": "Delivery Issues"
+  },
+  {
+    "speaker": "AGENT",
+    "text": "I apologize for the inconvenience. Let me check your order status.",
+    "satisfaction_score": 2.0,
+    "low_satisfaction": true
+  },
+  {
+    "speaker": "USER",
+    "text": "This is ridiculous. I need it for work. I've been waiting forever and keep getting the runaround.",
+    "satisfaction_score": 1.0,
+    "low_satisfaction": true,
+    "issues": ["frustrated_customer", "urgent_need"],
+    "severity": "CRITICAL",
+    "reason": "Customer extremely frustrated with delays",
+    "topic_id": 5,
+    "topic_label": "Delivery Issues"
+  },
+  {
+    "speaker": "AGENT",
+    "text": "I see your order is still in processing. It appears there was a warehouse backorder issue.",
+    "satisfaction_score": 1.8,
+    "low_satisfaction": true
+  },
+  {
+    "speaker": "USER",
+    "text": "Why wasn't I notified? And why did you charge me for express shipping if it's backordered?",
+    "satisfaction_score": 1.2,
+    "low_satisfaction": true,
+    "issues": ["lack_of_communication", "incorrect_charge"],
+    "severity": "HIGH",
+    "reason": "No notification and charged for unavailable service",
+    "topic_id": 5,
+    "topic_label": "Delivery Issues"
+  },
+  {
+    "speaker": "AGENT",
+    "text": "You're right, that's our mistake. I can process a refund for the shipping fee.",
+    "satisfaction_score": 2.5,
+    "low_satisfaction": true
+  },
+  {
+    "speaker": "USER",
+    "text": "What about the laptop? When will I actually get it? Can you expedite it?",
+    "satisfaction_score": 2.0,
+    "low_satisfaction": true,
+    "issues": ["unresolved_issue"],
+    "severity": "HIGH",
+    "reason": "Main issue not addressed",
+    "topic_id": 5,
+    "topic_label": "Delivery Issues"
+  },
+  {
+    "speaker": "AGENT",
+    "text": "Unfortunately, the item is still on backorder. Estimated arrival is another 2 weeks.",
+    "satisfaction_score": 1.5,
+    "low_satisfaction": true
+  },
+  {
+    "speaker": "USER",
+    "text": "This is unacceptable. I want to cancel and get a full refund. Your service is terrible.",
+    "satisfaction_score": 1.0,
+    "low_satisfaction": true,
+    "issues": ["cancellation_request", "negative_feedback"],
+    "severity": "CRITICAL",
+    "reason": "Customer wants to cancel order",
+    "topic_id": 5,
+    "topic_label": "Delivery Issues"
+  },
+  {
+    "speaker": "AGENT",
+    "text": "I understand your frustration. I'll process the cancellation and full refund right away.",
+    "satisfaction_score": 2.8,
+    "low_satisfaction": true
+  },
+  {
+    "speaker": "USER",
+    "text": "Fine. I'll take my business elsewhere. Never ordering from you again.",
+    "satisfaction_score": 1.0,
+    "low_satisfaction": true,
+    "issues": ["lost_customer", "churn"],
+    "severity": "CRITICAL",
+    "reason": "Customer leaving due to poor experience",
+    "topic_id": 5,
+    "topic_label": "Delivery Issues"
+  }
+]

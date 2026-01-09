@@ -1,0 +1,90 @@
+[
+  {
+    "speaker": "SYSTEM",
+    "text": "Hello! Welcome to RetailMind support. How can I assist you today?",
+    "satisfaction_score": null,
+    "low_satisfaction": false,
+    "issues": [],
+    "severity": "NONE",
+    "reason": "",
+    "topic_id": -1,
+    "topic_label": "UNCLUSTERED"
+  },
+  {
+    "speaker": "USER",
+    "text": "Hi, I placed an order last week but I haven't received a shipping confirmation yet. My order number is RM-78542.",
+    "satisfaction_score": 3.0,
+    "low_satisfaction": true,
+    "issues": ["MISSING_CONTEXT"],
+    "severity": "MEDIUM",
+    "reason": "Customer is concerned about lack of shipping confirmation",
+    "topic_id": 1,
+    "topic_label": "Topic 1: Order Status & Tracking"
+  },
+  {
+    "speaker": "SYSTEM",
+    "text": "I apologize for the concern. Let me look up your order right away. I see order RM-78542 here. It looks like it was processed but the confirmation email may have gone to your spam folder. Let me resend that to you now.",
+    "satisfaction_score": null,
+    "low_satisfaction": false,
+    "issues": [],
+    "severity": "NONE",
+    "reason": "",
+    "topic_id": 1,
+    "topic_label": "Topic 1: Order Status & Tracking"
+  },
+  {
+    "speaker": "USER",
+    "text": "Oh, I just checked and you're right! It was in spam. Thank you for checking that.",
+    "satisfaction_score": 4.0,
+    "low_satisfaction": false,
+    "issues": [],
+    "severity": "NONE",
+    "reason": "",
+    "topic_id": 1,
+    "topic_label": "Topic 1: Order Status & Tracking"
+  },
+  {
+    "speaker": "SYSTEM",
+    "text": "You're welcome! Your package is currently in transit and should arrive by Thursday. I've also added your email to our safe sender list to prevent this in the future. Is there anything else I can help you with?",
+    "satisfaction_score": null,
+    "low_satisfaction": false,
+    "issues": [],
+    "severity": "NONE",
+    "reason": "",
+    "topic_id": 1,
+    "topic_label": "Topic 1: Order Status & Tracking"
+  },
+  {
+    "speaker": "USER",
+    "text": "That's perfect, thank you so much! You've been very helpful.",
+    "satisfaction_score": 4.5,
+    "low_satisfaction": false,
+    "issues": [],
+    "severity": "NONE",
+    "reason": "",
+    "topic_id": 1,
+    "topic_label": "Topic 1: Order Status & Tracking"
+  },
+  {
+    "speaker": "SYSTEM",
+    "text": "My pleasure! If you need anything else, feel free to reach out. Have a great day!",
+    "satisfaction_score": null,
+    "low_satisfaction": false,
+    "issues": [],
+    "severity": "NONE",
+    "reason": "",
+    "topic_id": 1,
+    "topic_label": "Topic 1: Order Status & Tracking"
+  },
+  {
+    "speaker": "USER",
+    "text": "You too, goodbye!",
+    "satisfaction_score": 4.5,
+    "low_satisfaction": false,
+    "issues": [],
+    "severity": "NONE",
+    "reason": "",
+    "topic_id": 1,
+    "topic_label": "Topic 1: Order Status & Tracking"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "topic_label": "Topic 3: MISSING_CONTEXT / UNSUPPORTED_INTENT",
+    "n_conversations": 6,
+    "avg_satisfaction": 3.2675975440681326,
+    "median_satisfaction": 3.3333333333333335,
+    "avg_low_satisfaction_rate": 0.19120122796593386,
+    "avg_n_user_turns": 14.0
+  },
+  {
+    "topic_label": "Topic 0: MISSING_CONTEXT / UNSUPPORTED_INTENT",
+    "n_conversations": 2,
+    "avg_satisfaction": 3.25,
+    "median_satisfaction": 3.166666666666667,
+    "avg_low_satisfaction_rate": 0.29166666666666663,
+    "avg_n_user_turns": 10.5
+  },
+  {
+    "topic_label": "Other / Uncategorized",
+    "n_conversations": 6,
+    "avg_satisfaction": 3.0995963912630575,
+    "median_satisfaction": 3.1,
+    "avg_low_satisfaction_rate": 0.0,
+    "avg_n_user_turns": 10.0
+  },
+  {
+    "topic_label": "Topic 5: MISSING_CONTEXT / TONE_ISSUE",
+    "n_conversations": 10,
+    "avg_satisfaction": 3.0787901912901914,
+    "median_satisfaction": 3.0,
+    "avg_low_satisfaction_rate": 0.18911019536019535,
+    "avg_n_user_turns": 12.0
+  },
+  {
+    "topic_label": "Topic 2: MISSING_CONTEXT / TONE_ISSUE",
+    "n_conversations": 9,
+    "avg_satisfaction": 3.0739384586606806,
+    "median_satisfaction": 3.0,
+    "avg_low_satisfaction_rate": 0.19021564854898187,
+    "avg_n_user_turns": 16.444444444444443
+  }
+]

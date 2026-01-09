@@ -1,0 +1,19 @@
+{
+  "top_n_conversations": 50,
+  "heuristics": {
+    "intent_signals": {
+      "direct_intent": 45,
+      "polite_request": 69
+    },
+    "constraint_signals": {
+      "wants_table": 4
+    },
+    "context_signals": {
+      "numbers_present": 70
+    }
+  },
+  "interpretation_notes": [
+    "Counts are heuristic occurrences across USER turns inside the Top-N conversations.",
+    "These are lightweight signals to explain why some interactions succeed without running heavy NLP models."
+  ]
+}
