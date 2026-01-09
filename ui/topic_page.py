@@ -1,7 +1,7 @@
 import streamlit as st
 from ui.conversations import render_conversations
 from ui.repairs import render_repair
-from logic.aggregations import compute_severity_stats
+from logic.aggregations import compute_severity_stats, infer_conversation_theme
 
 def render_topic_page(turns_df, topics_df, repairs_df, topic_id):
     topic_rows = topics_df[topics_df["topic_id"] == topic_id]
@@ -107,7 +107,15 @@ def render_topic_page(turns_df, topics_df, repairs_df, topic_id):
 
     st.markdown('<div class="topic-page">', unsafe_allow_html=True)
     
-    st.markdown(f'<h1 class="topic-header">{topic["topic_label"]}</h1>', unsafe_allow_html=True)
+    # Use inferred theme label matching diagnostics page
+    theme_label = topic["topic_label"]
+    if not topic_turns.empty:
+        inferred = infer_conversation_theme(topic_turns)
+        if inferred:
+            theme_label = inferred
+    display_label = f"Failure - {theme_label}"
+    
+    st.markdown(f'<h1 class="topic-header">{display_label}</h1>', unsafe_allow_html=True)
     st.markdown(f'<div class="topic-caption">{topic["example_reason"]}</div>', unsafe_allow_html=True)
 
     severity = compute_severity_stats(topic_turns)

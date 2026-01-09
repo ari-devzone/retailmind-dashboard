@@ -2,7 +2,6 @@ import streamlit as st
 from logic.aggregations import rank_topics
 from logic.aggregations import compute_severity_stats
 from logic.aggregations import infer_conversation_theme
-from logic.aggregations import infer_conversation_theme
 from ui.conversations import render_conversations
 from ui.repairs import render_repair
 
