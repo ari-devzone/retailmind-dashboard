@@ -1,11 +1,19 @@
 import io
 import json
 import random
+import re
 from datetime import datetime
 
 import pandas as pd
 import streamlit as st
 from logic.aggregations import infer_conversation_theme
+
+
+def _clean_topic_label(label: str) -> str:
+    """Remove numeric prefixes like 'Topic 4: ' from topic labels."""
+    if not label:
+        return ""
+    return re.sub(r"^Topic\s*\d+\s*[:\-]\s*", "", str(label)).strip()
 
 
 def _parse_uploaded_conversation(data) -> list:
@@ -76,7 +84,7 @@ def _add_conversation_to_data(turns: list):
             "severity": turn.get("severity", "NONE"),
             "reason": turn.get("reason", ""),
             "topic_id": turn.get("topic_id", -1),
-            "topic_label": turn.get("topic_label", "UNCLUSTERED"),
+            "topic_label": _clean_topic_label(turn.get("topic_label", "UNCLUSTERED")),
             "satisfaction_source": "upload"
         }
         new_records.append(record)
@@ -116,8 +124,13 @@ def _analyze_uploaded_conversation(turns: list) -> dict:
     else:
         effort = "High"
     
-    # Extract theme from most common topic or infer from text
-    topics = [turn.get("topic_label", "UNCLUSTERED") for turn in turns if turn.get("topic_label") and turn.get("topic_label") != "UNCLUSTERED"]
+    # Extract theme from most common topic (cleaned) or infer from text
+    topics = [
+        _clean_topic_label(turn.get("topic_label", "UNCLUSTERED"))
+        for turn in turns
+        if turn.get("topic_label") and turn.get("topic_label") != "UNCLUSTERED"
+    ]
+    topics = [t for t in topics if t]
     if topics:
         theme = max(set(topics), key=topics.count)
     else:

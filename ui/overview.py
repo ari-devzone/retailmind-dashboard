@@ -722,19 +722,35 @@ hr {
             
             # Create trend chart
             if len(trend_df) > 0:
-                # Auto-scale based on data with padding
+                # Auto-scale based on data with padding, and allow zoom/pan via bound scales
                 min_val = trend_df["Satisfaction Mean"].min()
                 max_val = trend_df["Satisfaction Mean"].max()
-                # Add 0.3 padding on both sides for better visualization
-                y_min = max(0, min_val - 0.3)
-                y_max = min(5, max_val + 0.3)
-                
-                chart = alt.Chart(trend_df).mark_line(point=True, color="#3b82f6", size=2).encode(
-                    x=alt.X("Snapshot:N", title="Timeline", sort=list(range(len(trend_df)))),
-                    y=alt.Y("Satisfaction Mean:Q", title="CSAT", scale=alt.Scale(domain=[y_min, y_max])),
-                    tooltip=["Snapshot", alt.Tooltip("Satisfaction Mean:Q", format=".2f")]
-                ).properties(height=250)
-                
+                y_min = max(0, min_val - 0.2)
+                y_max = min(5, max_val + 0.2)
+
+                zoom = alt.selection_interval(bind="scales", encodings=["x", "y"])
+                chart = (
+                    alt.Chart(trend_df)
+                    .mark_line(point=True, color="#3b82f6", size=2)
+                    .encode(
+                        x=alt.X(
+                            "Snapshot:N",
+                            title="Timeline",
+                            sort=list(range(len(trend_df))),
+                            axis=alt.Axis(labelPadding=6),
+                        ),
+                        y=alt.Y(
+                            "Satisfaction Mean:Q",
+                            title="CSAT",
+                            scale=alt.Scale(domain=[y_min, y_max]),
+                            axis=alt.Axis(format=".2f", tickCount=6, labelPadding=6),
+                        ),
+                        tooltip=["Snapshot", alt.Tooltip("Satisfaction Mean:Q", format=".2f")],
+                    )
+                    .properties(height=260)
+                    .add_params(zoom)
+                )
+
                 st.altair_chart(chart, use_container_width=True)
 
     st.markdown('<hr class="section-divider">', unsafe_allow_html=True)
